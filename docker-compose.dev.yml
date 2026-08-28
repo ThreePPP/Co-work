@@ -1,0 +1,24 @@
+# Dev compose file to quickly run PostgreSQL container for local dev
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: cowork_postgres_dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: cowork_user
+      POSTGRES_PASSWORD: cowork_password
+      POSTGRES_DB: cowork_db
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cowork_user -d cowork_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_dev_data:
+    driver: local

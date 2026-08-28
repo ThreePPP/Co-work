@@ -1,0 +1,56 @@
+{
+  "name": "co-work-server",
+  "version": "1.0.0",
+  "description": "Co-work Backend API with Express 5, Prisma, PostgreSQL, and Socket.IO",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "prisma generate && tsc",
+    "start": "node dist/index.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:push": "prisma db push",
+    "prisma:seed": "tsx prisma/seed.ts",
+    "prisma:studio": "prisma studio",
+    "docker:migrate": "docker run --rm --network co-work_default -v \"%cd%:/app\" -w /app -e DATABASE_URL=postgresql://cowork_user:cowork_password@postgres:5432/cowork_db?schema=public node:24-alpine node node_modules/prisma/build/index.js migrate dev --name",
+    "docker:seed": "docker run --rm --network co-work_default -v \"%cd%:/app\" -w /app -e DATABASE_URL=postgresql://cowork_user:cowork_password@postgres:5432/cowork_db?schema=public node:24-alpine node node_modules/tsx/dist/cli.mjs prisma/seed.ts"
+  },
+  "keywords": [
+    "co-work",
+    "express",
+    "prisma",
+    "socketio",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.4.1",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.0.1",
+    "google-auth-library": "^9.15.1",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.8.1",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.13.9",
+    "@types/uuid": "^10.0.0",
+    "prisma": "^6.4.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  },
+  "optionalDependencies": {
+    "@esbuild/win32-x64": "^0.28.2"
+  }
+}

@@ -1,0 +1,83 @@
+# ==============================================================================
+# Co-work — Primary Docker Compose Configuration (Production & Staging Ready)
+# Usage: docker compose up -d --build
+# ==============================================================================
+
+services:
+  # 1. PostgreSQL 17 Database
+  postgres:
+    image: postgres:17-alpine
+    container_name: cowork_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cowork_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cowork_password}
+      POSTGRES_DB: ${POSTGRES_DB:-cowork_db}
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cowork_user -d cowork_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - cowork_network
+
+  # 2. Express 5 Backend API
+  server:
+    build:
+      context: ./apps/server
+      dockerfile: Dockerfile
+    container_name: cowork_server
+    restart: unless-stopped
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: ${PORT:-5000}
+      DATABASE_URL: postgresql://cowork_user:cowork_password@postgres:5432/cowork_db?schema=public
+      JWT_SECRET: ${JWT_SECRET:-super-secret-cowork-jwt-key-2026-secure-company-token}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
+      UPLOAD_DIR: uploads
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+    ports:
+      - "5000:5000"
+    volumes:
+      - server_uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - cowork_network
+
+  # 3. Next.js 15 Frontend Web
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: cowork_web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: 3000
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:5000}
+      NEXT_PUBLIC_SOCKET_URL: ${NEXT_PUBLIC_SOCKET_URL:-http://localhost:5000}
+      NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    networks:
+      - cowork_network
+
+volumes:
+  postgres_data:
+    driver: local
+  server_uploads:
+    driver: local
+
+networks:
+  cowork_network:
+    driver: bridge

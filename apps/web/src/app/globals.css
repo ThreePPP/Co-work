@@ -1,0 +1,364 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-primary: #0b0f19;
+    --bg-secondary: #111827;
+    --bg-tertiary: #1f2937;
+    --bg-card: rgba(17, 24, 39, 0.75);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --text-primary: #f9fafb;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --accent-primary: #6366f1;
+    --accent-hover: #4f46e5;
+    --accent-glow: rgba(99, 102, 241, 0.35);
+  }
+
+  html.light {
+    color-scheme: light;
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f1f5f9;
+    --bg-card: #ffffff;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --accent-primary: #4f46e5;
+    --accent-hover: #4338ca;
+    --accent-glow: rgba(79, 70, 229, 0.15);
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif);
+    overflow-x: hidden;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.25);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.45);
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+/* Glow effects */
+.glow-accent {
+  box-shadow: 0 0 20px -5px rgba(99, 102, 241, 0.4);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 12px -2px rgba(16, 185, 129, 0.5);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+/* =========================================================================
+   LIGHT THEME ADAPTIVE STYLES (COMPREHENSIVE CLEAN LIGHT THEME)
+   ========================================================================= */
+html.light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* 1. Main Backgrounds & Canvas */
+html.light body,
+html.light main,
+html.light main[class*="bg-slate-950"],
+html.light div.flex-1[class*="bg-slate-950"] {
+  background-color: #f8fafc !important;
+}
+
+html.light aside,
+html.light header,
+html.light [class*="bg-slate-900"] {
+  background-color: #ffffff !important;
+}
+
+html.light [class*="bg-slate-950"]:not(body):not(main):not(div.flex-1) {
+  background-color: #ffffff !important;
+}
+
+html.light [class*="bg-slate-800"] {
+  background-color: #f1f5f9 !important;
+}
+
+html.light [class*="bg-slate-700"] {
+  background-color: #e2e8f0 !important;
+}
+
+/* 2. Page Header Banners & Gradients */
+html.light [class*="from-indigo-950"],
+html.light [class*="from-slate-900"],
+html.light [class*="via-purple-950"],
+html.light [class*="via-indigo-950"],
+html.light [class*="to-slate-900"] {
+  background-image: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 50%, #ffffff 100%) !important;
+  border-color: #c7d2fe !important;
+  box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.08) !important;
+}
+
+/* 3. Glass Panels & Modals */
+html.light .glass-panel {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* 4. Borders & Dividers */
+html.light [class*="border-slate-"],
+html.light [class*="border-indigo-500/20"],
+html.light [class*="border-indigo-500/30"],
+html.light [class*="border-white/10"],
+html.light [class*="border-white/20"],
+html.light [class*="divide-slate-"] {
+  border-color: #e2e8f0 !important;
+}
+
+/* 5. Typography & Headings */
+html.light .text-white,
+html.light [class*="text-white"],
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light h5,
+html.light h6 {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-100,
+html.light .text-slate-200,
+html.light [class*="text-slate-100"],
+html.light [class*="text-slate-200"] {
+  color: #1e293b !important;
+}
+
+html.light .text-slate-300,
+html.light [class*="text-slate-300"] {
+  color: #334155 !important;
+}
+
+html.light .text-slate-400,
+html.light [class*="text-slate-400"] {
+  color: #64748b !important;
+}
+
+html.light .text-slate-500,
+html.light [class*="text-slate-500"] {
+  color: #94a3b8 !important;
+}
+
+/* 6. Form Inputs, Selects & Textareas */
+html.light input:not([type="checkbox"]):not([type="radio"]),
+html.light select,
+html.light textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+html.light input:focus,
+html.light select:focus,
+html.light textarea:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* 7. Solid Primary Buttons (Keep Crisp White Text on Solid Backgrounds) */
+html.light button.bg-indigo-600,
+html.light a.bg-indigo-600,
+html.light button.bg-indigo-500,
+html.light a.bg-indigo-500,
+html.light button.bg-emerald-600,
+html.light button.bg-rose-600,
+html.light button.bg-red-600,
+html.light button[class*="bg-gradient-to-r"][class*="from-indigo-500"],
+html.light .bg-indigo-600:not([class*="/"]),
+html.light .bg-indigo-500:not([class*="/"]),
+html.light .bg-emerald-600:not([class*="/"]),
+html.light .bg-rose-600:not([class*="/"]) {
+  color: #ffffff !important;
+}
+
+html.light button.bg-indigo-600 *,
+html.light a.bg-indigo-600 *,
+html.light button.bg-indigo-500 *,
+html.light a.bg-indigo-500 *,
+html.light button.bg-emerald-600 *,
+html.light button.bg-rose-600 *,
+html.light button[class*="bg-gradient-to-r"][class*="from-indigo-500"] * {
+  color: #ffffff !important;
+}
+
+/* 8. Active Nav Links, Filter Pills, Badges & Pastel Accents in Light Mode (Pure Black High Contrast Text) */
+html.light [class*="bg-indigo-500/"],
+html.light [class*="bg-indigo-600/"] {
+  background-color: #e0e7ff !important;
+  color: #0f172a !important;
+  border-color: #c7d2fe !important;
+}
+
+html.light [class*="bg-indigo-500/"] *,
+html.light [class*="bg-indigo-600/"] *,
+html.light aside a[class*="bg-indigo-"] *,
+html.light button[class*="bg-indigo-600/"] * {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+html.light [class*="bg-emerald-500/"],
+html.light [class*="bg-emerald-600/"] {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+  border-color: #a7f3d0 !important;
+}
+
+html.light [class*="bg-emerald-500/"] *,
+html.light [class*="bg-emerald-600/"] * {
+  color: #065f46 !important;
+}
+
+html.light [class*="bg-rose-500/"],
+html.light [class*="bg-rose-600/"] {
+  background-color: #ffe4e6 !important;
+  color: #9f1239 !important;
+  border-color: #fecdd3 !important;
+}
+
+html.light [class*="bg-rose-500/"] *,
+html.light [class*="bg-rose-600/"] * {
+  color: #9f1239 !important;
+}
+
+html.light [class*="bg-amber-500/"],
+html.light [class*="bg-amber-600/"] {
+  background-color: #fef3c7 !important;
+  color: #92400e !important;
+  border-color: #fde68a !important;
+}
+
+html.light [class*="bg-amber-500/"] *,
+html.light [class*="bg-amber-600/"] * {
+  color: #92400e !important;
+}
+
+html.light [class*="bg-cyan-500/"],
+html.light [class*="bg-cyan-600/"] {
+  background-color: #cffafe !important;
+  color: #155e75 !important;
+  border-color: #a5f3fc !important;
+}
+
+html.light [class*="bg-cyan-500/"] *,
+html.light [class*="bg-cyan-600/"] * {
+  color: #155e75 !important;
+}
+
+html.light [class*="bg-purple-500/"],
+html.light [class*="bg-purple-600/"] {
+  background-color: #f3e8ff !important;
+  color: #6b21a8 !important;
+  border-color: #e9d5ff !important;
+}
+
+html.light [class*="bg-purple-500/"] *,
+html.light [class*="bg-purple-600/"] * {
+  color: #6b21a8 !important;
+}
+
+/* 9. Hover States */
+html.light [class*="hover:bg-slate-800"]:hover,
+html.light [class*="hover:bg-slate-700"]:hover {
+  background-color: #e2e8f0 !important;
+}
+
+html.light [class*="hover:bg-slate-900"]:hover {
+  background-color: #f1f5f9 !important;
+}
+
+html.light [class*="hover:text-white"]:hover,
+html.light [class*="hover:text-slate-200"]:hover {
+  color: #0f172a !important;
+}
+
+/* 10. Shadows */
+html.light [class*="shadow-xl"],
+html.light [class*="shadow-2xl"] {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03) !important;
+}
